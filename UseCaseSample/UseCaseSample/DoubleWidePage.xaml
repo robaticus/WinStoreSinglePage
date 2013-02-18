@@ -1,0 +1,15 @@
+﻿<Page
+    x:Class="UseCaseSample.DoubleWidePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:UseCaseSample"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    DataContext="{Binding Source={StaticResource Locator}, Path=DoubleWide}"
+    mc:Ignorable="d">
+
+    <Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
+        <Button Content="Go to Other Page" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding ActivateItemsUseCaseCommand}"></Button>
+        <Button Content="Show Popup" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,124,0,0" Command="{Binding ActivatePopupUseCaseCommand}"></Button>
+    </Grid>
+</Page>
