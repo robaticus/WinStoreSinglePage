@@ -8,6 +8,7 @@
     mc:Ignorable="d">
 
     <Grid Background="Lavender">
-        <Button VerticalAlignment="Center" HorizontalAlignment="Center" Content="This is a dialog box" Foreground="Black" BorderBrush="Black"/>
+        <Button VerticalAlignment="Center" HorizontalAlignment="Center" Content="This is a dialog box"
+                Foreground="Black" BorderBrush="Black" />
     </Grid>
 </Page>

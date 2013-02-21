@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GalaSoft.MvvmLight;
+﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Ioc;
 using UseCaseSample.UseCaseManager;
@@ -12,15 +7,11 @@ namespace UseCaseSample.ViewModel
 {
     public class DoubleWideViewModel : ViewModelBase
     {
-        private IUseCaseManager _useCaseManager;
-
-        public RelayCommand ActivateItemsUseCaseCommand { get; set; }
-        public RelayCommand ActivatePopupUseCaseCommand { get; set; }
+        private readonly IUseCaseManager _useCaseManager;
 
 
         public DoubleWideViewModel() : this(null)
         {
-            
         }
 
         [PreferredConstructor]
@@ -31,12 +22,13 @@ namespace UseCaseSample.ViewModel
             SetupCommands();
         }
 
+        public RelayCommand ActivateItemsUseCaseCommand { get; set; }
+        public RelayCommand ActivatePopupUseCaseCommand { get; set; }
+
         private void SetupCommands()
         {
-            ActivateItemsUseCaseCommand = new RelayCommand(()=>_useCaseManager.ActivateUseCase(UseCases.ItemsPage));
+            ActivateItemsUseCaseCommand = new RelayCommand(() => _useCaseManager.ActivateUseCase(UseCases.ItemsPage));
             ActivatePopupUseCaseCommand = new RelayCommand(() => _useCaseManager.ActivateUseCase(UseCases.ShowPopup));
         }
-
-        
     }
 }
