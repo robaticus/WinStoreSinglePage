@@ -9,7 +9,11 @@
     mc:Ignorable="d">
 
     <Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
-        <Button Content="Go to Other Page" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding ActivateItemsUseCaseCommand}"></Button>
-        <Button Content="Show Popup" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,124,0,0" Command="{Binding ActivatePopupUseCaseCommand}"></Button>
+        <Button Content="Go to Other Page" HorizontalAlignment="Center" VerticalAlignment="Center"
+                Command="{Binding ActivateItemsUseCaseCommand}">
+        </Button>
+        <Button Content="Show Popup" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,124,0,0"
+                Command="{Binding ActivatePopupUseCaseCommand}">
+        </Button>
     </Grid>
 </Page>

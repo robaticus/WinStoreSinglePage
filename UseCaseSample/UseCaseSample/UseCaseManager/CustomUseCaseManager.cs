@@ -1,34 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reflection;
 using GalaSoft.MvvmLight.Messaging;
 using UseCaseSample.Utility;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-using System.Reflection;
-
 namespace UseCaseSample.UseCaseManager
 {
     public class CustomUseCaseManager : IUseCaseManager
     {
-        private List<Frame> _frames = new List<Frame>();
+        private readonly List<Frame> _frames = new List<Frame>();
 
-        private Stack<UseCases>  _useCaseStack = new Stack<UseCases>();
+        private readonly Stack<UseCases> _useCaseStack = new Stack<UseCases>();
 
         private UseCases _currentUseCase = UseCases.None;
         private Frame _opacityFrame;
 
-        public CustomUseCaseManager()
-        {
-            
-        }
-
         public void ActivateUseCase(UseCases useCase)
         {
-
             _useCaseStack.Push(useCase);
             Messenger.Default.Send(new CanGoBackChangedMessage());
 
@@ -41,23 +32,49 @@ namespace UseCaseSample.UseCaseManager
 
                 case UseCases.ItemsPage:
                     HideAllContent();
-                    DisplayContent(typeof(ItemsPage));
+                    DisplayContent(typeof (ItemsPage));
                     break;
 
                 case UseCases.ShowDog:
-                    DisplayContent(typeof(DogPage));
+                    DisplayContent(typeof (DogPage));
                     break;
 
                 case UseCases.ShowKid:
-                    DisplayContent(typeof(KidPage));
+                    DisplayContent(typeof (KidPage));
                     break;
 
                 case UseCases.ShowPopup:
-                    DisplayContent(typeof(PopupPage));
+                    DisplayContent(typeof (PopupPage));
                     break;
-
             }
-            
+        }
+
+        public void RegisterRegion(Frame frame)
+        {
+            if (frame.Name == "OpacityFrame")
+            {
+                _opacityFrame = frame;
+            }
+
+            if (!_frames.Contains(frame))
+            {
+                _frames.Add(frame);
+            }
+        }
+
+        public bool CanGoBack
+        {
+            get { return _useCaseStack.Count > 1; }
+        }
+
+        public void GoBack()
+        {
+            if (_useCaseStack.Count > 1)
+            {
+                _useCaseStack.Pop(); //get the current page off the stack.
+                UseCases backCase = _useCaseStack.Pop(); //get the previous page off the stack.
+                ActivateUseCase(backCase); // navigate to the previous page
+            }
         }
 
         private void DisplayContent(Type type)
@@ -65,7 +82,7 @@ namespace UseCaseSample.UseCaseManager
             string region;
             bool disableOtherContent = false;
 
-            var t = type.GetTypeInfo();
+            TypeInfo t = type.GetTypeInfo();
 
             var attrib = t.GetCustomAttribute<DisplayRegionAttribute>();
             if (attrib == null)
@@ -87,14 +104,14 @@ namespace UseCaseSample.UseCaseManager
                 _opacityFrame.Visibility = Visibility.Collapsed;
             }
 
-            var frame = _frames.FirstOrDefault(f => f.Name == region);
+            Frame frame = _frames.FirstOrDefault(f => f.Name == region);
             if (frame != null)
             {
                 frame.Navigate(type);
             }
             else
             {
-                throw new Exception(string.Format("Couldn't find frame named {0}",region));
+                throw new Exception(string.Format("Couldn't find frame named {0}", region));
             }
         }
 
@@ -103,36 +120,6 @@ namespace UseCaseSample.UseCaseManager
             foreach (Frame f in _frames)
             {
                 f.Content = null;
-            }
-        }
-
-        public void RegisterRegion(Frame frame)
-        {
-            if (frame.Name == "OpacityFrame")
-            {
-                _opacityFrame = frame;
-            }
-
-            if (!_frames.Contains(frame))
-            {
-                _frames.Add(frame);
-            }
-
-
-        }
-
-        public bool CanGoBack
-        {
-            get { return _useCaseStack.Count > 1; }
-        }
-
-        public void GoBack()
-        {
-            if (_useCaseStack.Count > 1)
-            {
-                _useCaseStack.Pop();                    //get the current page off the stack.
-                var backCase = _useCaseStack.Pop();     //get the previous page off the stack.
-                ActivateUseCase(backCase);              // navigate to the previous page
             }
         }
     }

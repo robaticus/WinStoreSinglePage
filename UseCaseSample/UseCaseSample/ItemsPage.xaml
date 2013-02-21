@@ -10,8 +10,8 @@
 
     <Grid Background="Brown">
         <StackPanel Margin="24">
-            <Button Content="Show Kid Page" Command="{Binding ShowKidCommand}"/>
-            <Button Content="Show Dog Page" Margin="0,12,0,0" Command="{Binding ShowDogCommand}"/>
+            <Button Content="Show Kid Page" Command="{Binding ShowKidCommand}" />
+            <Button Content="Show Dog Page" Margin="0,12,0,0" Command="{Binding ShowDogCommand}" />
         </StackPanel>
     </Grid>
 </Page>
